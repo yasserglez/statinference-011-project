@@ -38,7 +38,7 @@ set.seed(12345)
 library("ggplot2")
 ```
 
-We must obtain a sample with 1,000 observations of the mean of 40 simulations 
+We must obtain a sample with 1,000 observations of averages of 40 simulations 
 of the exponential distribution, which can be generated in R with the following 
 code fragment.
 
@@ -47,10 +47,34 @@ exp_simulations <- replicate(1000, mean(rexp(40, rate = 0.2)))
 ```
 
 After running this code, `exp_simulations` contains a vector with 1,000 elements.
-This vector constitutes the population that will be studied in the remainder 
+This vector constitutes the sample that will be studied in the remainder 
 of the report.
 
 # Sample Mean versus Theoretical Mean
+
+The expected value of the sample mean of the averages of the simulations of the 
+exponential distribution is the theoretical distribution mean---i.e. $1/\lambda$, 
+in this particular case $1/0.2 = 5$. Therefore, if we calculate the sample mean of
+`exp_simulations` we must obtain a value close to 5.
+
+```{r}
+mean(exp_simulations)
+```
+
+This is also illustrated in the following plot, showing a histogram of 
+`exp_simulations` together with vertical lines for the sample mean (blue)
+and the theoretical mean (red).
+
+```{r sample_vs_theoretical_mean}
+df <- data.frame(exp_simulations = exp_simulations)
+ggplot(df, aes(x = exp_simulations)) +
+    geom_histogram(binwidth = 0.2) +
+    geom_vline(xintercept = mean(exp_simulations), colour = "blue") +
+    geom_vline(xintercept = 1 / 0.2, colour = "red") +
+    ggtitle("Sample Mean versus Theoretical Mean") +
+    xlab("Average of 40 simulations of the exponential distribution") +
+    ylab("Count")
+```
 
 # Sample Variance versus Theoretical Variance
 
