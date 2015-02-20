@@ -1,0 +1,7 @@
+---
+title: 'Part 2: Basic Inferential Data Analysis'
+author: "Yasser Gonzalez"
+date: "February 2015"
+output:
+  pdf_document: default
+---

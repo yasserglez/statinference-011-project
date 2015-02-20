@@ -1,0 +1,7 @@
+---
+title: 'Part 1: A Simulation Exercise'
+author: "Yasser Gonzalez"
+date: "February 2015"
+output:
+  pdf_document: default
+---
