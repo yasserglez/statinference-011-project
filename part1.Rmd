@@ -8,29 +8,25 @@ output:
 
 # Overview
 
-In the first part of the project we study the exponential distribution in R 
-and compare it with the Central Limit Theorem. The probability density function
-of the exponential distribution is given by
-
+We study the exponential distribution under the central limit theorem using R.
+The probability density function of the exponential distribution is given by
 \begin{equation*}
 f(x;\lambda) = \begin{cases}
 \lambda e^{-\lambda x} & x \ge 0, \\
 0 & x < 0.
 \end{cases},
 \end{equation*}
-
 where $\lambda > 0$ is the rate parameter. The distribution mean is $1/\lambda$ 
-and the standard deviation is also $1/\lambda$. 
-
-This report investigates the distribution of 1,000 observations of averages of 
-40 simulations of the exponential distribution. The rate parameter $\lambda$ will 
-be set to 0.2 for all of the simulations.
+and the standard deviation is also $1/\lambda$. Specifically, this report 
+investigates the distribution of 1,000 observations of averages of 40 exponential 
+simulations. The rate parameter $\lambda$ will be set to 0.2 for all of the 
+simulations.
 
 # Simulations
 
-The first step before running the simulations is to set the random seed to a fixed 
-number to make the results reproducible. Also, the R packages that will be used 
-throughout the report are loaded into the interpreter.
+Before running the simulations, we set the random seed to a fixed number to make 
+the results reproducible. Also, the R packages that will be used throughout 
+the report are loaded into the interpreter.
 
 ```{r}
 set.seed(12345)
@@ -38,15 +34,15 @@ set.seed(12345)
 library("ggplot2")
 ```
 
-We must obtain a sample with 1,000 observations of averages of 40 simulations 
+We must obtain a sample with 1,000 observations of the average of 40 simulations 
 of the exponential distribution, which can be generated in R with the following 
 code fragment.
 
 ```{r}
-exp_simulations <- replicate(1000, mean(rexp(40, rate = 0.2)))
+mean_simulations <- replicate(1000, mean(rexp(40, rate = 0.2)))
 ```
 
-After running this code, `exp_simulations` contains a vector with 1,000 elements.
+After running this code, `mean_simulations` contains a vector with 1,000 elements.
 This vector constitutes the sample that will be studied in the remainder 
 of the report.
 
@@ -54,28 +50,53 @@ of the report.
 
 The expected value of the sample mean of the averages of the simulations of the 
 exponential distribution is the theoretical distribution mean---i.e. $1/\lambda$, 
-in this particular case $1/0.2 = 5$. Therefore, if we calculate the sample mean of
-`exp_simulations` we must obtain a value close to 5.
+in this case $1/0.2 = 5$. Therefore, if we calculate the sample mean of
+`mean_simulations` we must obtain a value close to 5.
 
 ```{r}
-mean(exp_simulations)
+mean(mean_simulations)
 ```
 
-This is also illustrated in the following plot, showing a histogram of 
-`exp_simulations` together with vertical lines for the sample mean (blue)
-and the theoretical mean (red).
+This fact is also illustrated in the following plot, which shows a histogram of 
+`mean_simulations` along with a vertical line for the theoretical mean. 
+It confirms that the sample is centered around the theoretical mean.
 
 ```{r sample_vs_theoretical_mean}
-df <- data.frame(exp_simulations = exp_simulations)
-ggplot(df, aes(x = exp_simulations)) +
-    geom_histogram(binwidth = 0.2) +
-    geom_vline(xintercept = mean(exp_simulations), colour = "blue") +
-    geom_vline(xintercept = 1 / 0.2, colour = "red") +
-    ggtitle("Sample Mean versus Theoretical Mean") +
-    xlab("Average of 40 simulations of the exponential distribution") +
-    ylab("Count")
+df <- data.frame(mean_simulations = mean_simulations)
+ggplot(df, aes(x = mean_simulations)) +
+    geom_histogram(binwidth = 0.15) +
+    geom_vline(xintercept = 5, colour = "red") +
+    xlab("Mean of 40 exponentials") +
+    ylab("Frequency")
 ```
 
 # Sample Variance versus Theoretical Variance
+
+The theoretical variance of the distribution of the mean of 40 exponentials
+is $\sigma^2/n$, where $\sigma^2$ is the variance of the exponential distribution
+$1/\lambda^2$ and $n$ is the sample size---i.e. in this case 
+$\frac{1}{n \lambda^2} = \frac{1}{40 \cdot 0.2^2} = 0.625$. So, if we calculate
+the sample variance of `mean_simulations` we must obtain a value close to 0.625.
+
+```{r}
+var(mean_simulations)
+```
+
+Additionally, the following code fragment repeats 1,000 times the simulation 
+of the sample mean of the averages of the exponentials to collect a sample of
+the distribution of the variance. The plot illustrates that the sample variance 
+is centered around the theoretical variance of the distribution 0.625 
+represented by the vertical line.
+
+```{r sample_vs_theoretical_var}
+var_simulations <- replicate(1000, var(replicate(1000, mean(rexp(40, rate = 0.2)))))
+
+df <- data.frame(var_simulations = var_simulations)
+ggplot(df, aes(x = var_simulations)) +
+    geom_histogram(binwidth = 0.005) +
+    geom_vline(xintercept = 0.625, colour = "red") +
+    xlab("Variance of the mean of 40 exponentials") +
+    ylab("Frequency")
+```
 
 # Distribution
