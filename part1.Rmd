@@ -60,20 +60,20 @@ mean(mean_sample)
 
 This fact is also illustrated in the following plot, which shows a histogram of 
 `mean_sample` along with a vertical line for the theoretical mean. 
-It confirms that the sample is centered around the theoretical mean.
+It confirms that the sample is centred around the theoretical mean.
 
 ```{r sample_vs_theoretical_mean}
 data <- data.frame(x = mean_sample)
 ggplot(data, aes(x = x)) +
     geom_histogram(binwidth = 0.15) +
     geom_vline(xintercept = 5, colour = "red") +
-    xlab("Mean of 40 exponentials") +
+    xlab("Mean of 40 exponential simulations") +
     ylab("Count")
 ```
 
 # Sample Variance versus Theoretical Variance
 
-The theoretical variance of the distribution of the mean of 40 exponentials
+The theoretical variance of the distribution of the mean of 40 exponential simulations
 is $\sigma^2/n$, where $\sigma^2$ is the variance of the exponential distribution
 $1/\lambda^2$ and $n$ is the sample size---i.e. in this case 
 $\frac{1}{n \lambda^2} = \frac{1}{40 \cdot 0.2^2} = 0.625$. So, if we calculate
@@ -84,10 +84,10 @@ var(mean_sample)
 ```
 
 Additionally, the following code fragment repeats 1,000 times the simulation 
-of the sample mean of the averages of the exponentials to collect a sample of
-the distribution of the variance. The plot illustrates that the sample variance 
-is centered around the theoretical variance of the distribution 0.625 
-represented by the vertical line.
+of the sample mean of the averages of the exponential simulations to collect a 
+sample of the distribution of the variance. The plot illustrates that the 
+sample variance is centred around the theoretical variance of the 
+distribution 0.625 represented by the vertical line.
 
 ```{r sample_vs_theoretical_var}
 var_sample <- replicate(1000, var(replicate(1000, mean(rexp(40, rate = 0.2)))))
@@ -96,15 +96,15 @@ data <- data.frame(x = var_sample)
 ggplot(data, aes(x = x)) +
     geom_histogram(binwidth = 0.005) +
     geom_vline(xintercept = 0.625, colour = "red") +
-    xlab("Variance of the mean of 40 exponentials") +
+    xlab("Variance of the mean of 40 exponential simulations") +
     ylab("Count")
 ```
 
 # Distribution
 
 According to the central limit theorem, the distribution of the averages of the 
-exponentials becomes normal as the sample size increases. The result is that
-the sample in `mean_sample` approximates $N(\mu,\sigma^2/n)$, where
+exponential simulations becomes normal as the sample size increases. The result 
+is that the sample in `mean_sample` approximates $N(\mu,\sigma^2/n)$, where
 $\mu$ and $\sigma^2$ are the mean and the variance of the exponential distribution,
 respectively, and $n$ is the sample size---i.e. in this case $N(5,0.625)$.
 The following plot illustrates this fact by showing the histogram of 
@@ -120,6 +120,6 @@ normal_data$density = dnorm(normal_data$x, mean = 5, sd = sqrt(0.625))
 ggplot(data, aes(x = x, y = ..density..)) +
     geom_histogram(binwidth = 0.15) +
     geom_line(aes(x = x, y = density), data = normal_data, colour = "red") +
-    xlab("Mean of 40 exponentials") +
+    xlab("Mean of 40 exponential simulations") +
     ylab("Density")
 ```

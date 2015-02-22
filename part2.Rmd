@@ -70,8 +70,8 @@ The next section studies these hypotheses in more detail.
 # Comparing Tooth Growth by Delivery Method and Dose Level
 
 First we study the null hypothesis that both delivery methods produce similar results,
-versus the alternative hypothesis that they give different results. To do so, we
-conduct a two-sided $t$-test assuming different variances.
+versus the alternative hypothesis that they give different results. We conduct a 
+two-sided $t$-test assuming different variances.
 
 ```{r}
 t.test(filter(ToothGrowth, supp == "OJ")$len,
@@ -85,10 +85,10 @@ level to support the alternative hypothesis that the two means are different.
 Therefore, we can conclude that the two delivery methods produce similar results.
 
 Next, we study the hypothesis that an increasing dose of vitamin C accelerate 
-tooth growth independently of the delivery method. To do so, we perform two
+tooth growth independently of the delivery method. We perform two
 one-sided $t$-tests, one for the 1 mg dose versus the 0.5 mg dose and
 another for the 2 mg dose versus the 1 mg dose. In both cases the alternative
-hypothesis is that larger doses accelerate tooth growth, according to the 
+hypothesis is that larger doses accelerate growth, according to the 
 mean tooth length. The tests are conducted using the following R code.
 
 ```{r}
@@ -103,16 +103,15 @@ t.test(filter(ToothGrowth, dose == "2")$len,
        conf.level = 0.95)
 ```
 
-In both cases the obtained p-value is less than 0.05, wich means that the 
+In both cases the obtained p-value is less than 0.05, which means that the 
 null hypothesis is rejected at the 5% significance level. Therefore, the 
-evidence suggests that increasing dose levels of vitamin C accelerate 
-tooth growth.
+evidence suggests that increasing dose levels accelerate tooth growth.
 
 # Conclusions
 
-Based on the results of the study, we can conclude that the data suggests 
-that an increasing dose of vitamin C administered to guinea pigs increases the 
-tooth growth. The analysis assumes throught the use of the $t$-test that
-the tooth length is normally distributed. The data only partially supports 
-this assumption, given that some of the histograms built during the 
-exploratory analysis phase show right or left skewed distributions.
+Based on the results, we can conclude that that an increasing dose of vitamin C 
+administered to guinea pigs increases the tooth growth. The analysis assumes 
+through the use of the $t$-test that the tooth length is normally distributed. 
+The data only partially supports this assumption, given that some of the 
+histograms built during the exploratory analysis phase show right or 
+left skewed distributions.
