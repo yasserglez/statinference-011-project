@@ -12,7 +12,7 @@ In the second part of the project we perform an analysis of the `ToothGrowth`
 data provided as part of the R `datasets` package. The dataset reports the 
 results of a study of the effect of vitamin C on tooth growth in guinea pigs.
 The length of the teeth was measured in 60 guinea pigs, corresponding to 
-10 guinea pigs for each combination of three dose levels of vitamin C 
+10 subjects for each combination of three dose levels of vitamin C 
 (0.5, 1, and 2 mg) and two delivery methods (orange juice or ascorbic acid). 
 The following references contain additional information about the dataset.
 
@@ -24,8 +24,48 @@ The following references contain additional information about the dataset.
 > 
 > McNeil, D. R. (1977) "Interactive Data Analysis". New York: Wiley.
 
+# Loading the Required Packages
+
+The following R packages are required to perform the analysis in this report.
+
+```{r}
+library("datasets")
+library("ggplot2")
+```
+
 # Exploratory Analysis
 
-# Comparing Tooth Growth by Supplement Type and Dose Level
+First, the dataset is loaded into R and the `str` function is used to obtain
+some information about its structure.
+
+```{r}
+data(ToothGrowth)
+ToothGrowth$dose <- factor(ToothGrowth$dose)
+str(ToothGrowth)
+```
+
+The dataset contains 60 observations of three variables: `len` for the tooth length, 
+`supp` for the delivery method (encoded as `"OJ"` and `"VC"` for orange juice and 
+ascorbic acid, respectively), and `dose` for the dose level. The `dose` variable was 
+originally represented as a numerical variable, but for the purpose of this 
+analysis it is easier to treat it as a categorical variable with three levels 
+and it was converted to factors.
+
+In order to help us get a sense of the features in the data, the following code
+builds a plot with a histogram of the tooth length for each combination of 
+the values of the `supp` and `dose` variables.
+
+```{r}
+ggplot(ToothGrowth, aes(x = len)) +
+    facet_grid(supp ~ dose) +
+    geom_histogram(binwidth = 1) +
+    labs(x = "Tooth Length", y = "Count")
+```
+
+The plot suggests that an increasing dose of vitamin C has a positive impact on 
+tooth growth regardless of the delivery method. The next section explores 
+this hypothesis in more detail.
+
+# Comparing Tooth Growth by Delivery Method and Dose Level
 
 # Conclusions
