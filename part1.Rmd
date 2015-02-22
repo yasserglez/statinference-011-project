@@ -6,10 +6,11 @@ output:
   pdf_document: default
 ---
 
-# Overview
+# Introduction
 
-We study the exponential distribution under the central limit theorem using R.
-The probability density function of the exponential distribution is given by
+In the first part of the project we study the exponential distribution under 
+the central limit theorem using R. The probability density function of the 
+exponential distribution is given by
 \begin{equation*}
 f(x;\lambda) = \begin{cases}
 \lambda e^{-\lambda x} & x \ge 0, \\
