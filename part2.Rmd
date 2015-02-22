@@ -1,7 +1,31 @@
 ---
 title: 'Part 2: Basic Inferential Data Analysis'
-author: "Yasser Gonzalez"
+author: "Yasser Gonzalez --- http://yassergonzalez.com"
 date: "February 2015"
 output:
   pdf_document: default
 ---
+
+# Introduction
+
+In the second part of the project we perform an analysis of the `ToothGrowth` 
+data provided as part of the R `datasets` package. The dataset reports the 
+results of a study of the effect of vitamin C on tooth growth in guinea pigs.
+The length of the teeth was measured in 60 guinea pigs, corresponding to 
+10 guinea pigs for each combination of three dose levels of vitamin C 
+(0.5, 1, and 2 mg) and two delivery methods (orange juice or ascorbic acid). 
+The following references contain additional information about the dataset.
+
+> Crampton, E. W. (1947) "The growth of the odontoblasts of the incisor 
+> tooth as a criterion of the vitamin C intake of the guinea pig".
+> The Journal of Nutrition, 33:5, 491-504.
+> 
+> C. I. Bliss (1952) "The Statistics of Bioassay". Academic Press.
+> 
+> McNeil, D. R. (1977) "Interactive Data Analysis". New York: Wiley.
+
+# Exploratory Analysis
+
+# Comparing Tooth Growth by Supplement Type and Dose Level
+
+# Conclusions
