@@ -30,6 +30,7 @@ The following R packages are required to perform the analysis in this report.
 
 ```{r}
 library("datasets")
+library("dplyr", warn.conflicts = FALSE)
 library("ggplot2")
 ```
 
@@ -63,9 +64,48 @@ ggplot(ToothGrowth, aes(x = len)) +
 ```
 
 The plot suggests that an increasing dose of vitamin C has a positive impact on 
-tooth growth regardless of the delivery method. The next section explores 
-this hypothesis in more detail.
+tooth growth and that similar results are obtained with both delivery methods. 
+The next section studies these hypotheses in more detail.
 
 # Comparing Tooth Growth by Delivery Method and Dose Level
+
+First we study the null hypothesis that both delivery methods produce similar results,
+versus the alternative hypothesis that they give different results. To do so, we
+conduct a two-sided $t$-test assuming different variances.
+
+```{r}
+t.test(filter(ToothGrowth, supp == "OJ")$len,
+       filter(ToothGrowth, supp == "VC")$len,
+       alternative = "two.sided", var.equal = FALSE, 
+       conf.level = 0.95)
+```
+
+According to the results, there is no statistical evidence at the 5% confidence 
+level to support the alternative hypothesis that the two means are different. 
+Therefore, we can conclude that the two delivery methods produce similar results.
+
+Next, we study the hypothesis that an increasing dose of vitamin C accelerate 
+tooth growth independently of the delivery method. To do so, we perform two
+one-sided $t$-tests, one for the 1 mg dose versus the 0.5 mg dose and
+another for the 2 mg dose versus the 1 mg dose. In both cases the alternative
+hypothesis is that larger doses accelerate tooth growth, according to the 
+mean tooth length. The tests are conducted using the following R code.
+
+```{r}
+t.test(filter(ToothGrowth, dose == "1")$len,
+       filter(ToothGrowth, dose == "0.5")$len,
+       alternative = "greater", var.equal = FALSE, 
+       conf.level = 0.95)
+
+t.test(filter(ToothGrowth, dose == "2")$len,
+       filter(ToothGrowth, dose == "1")$len,
+       alternative = "greater", var.equal = FALSE, 
+       conf.level = 0.95)
+```
+
+In both cases the obtained p-value is less than 0.05, wich means that the 
+null hypothesis is rejected at the 5% significance level. Therefore, the 
+evidence suggests that increasing dose levels of vitamin C accelerate 
+tooth growth.
 
 # Conclusions
