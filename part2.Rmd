@@ -109,3 +109,10 @@ evidence suggests that increasing dose levels of vitamin C accelerate
 tooth growth.
 
 # Conclusions
+
+Based on the results of the study, we can conclude that the data suggests 
+that an increasing dose of vitamin C administered to guinea pigs increases the 
+tooth growth. The analysis assumes throught the use of the $t$-test that
+the tooth length is normally distributed. The data only partially supports 
+this assumption, given that some of the histograms built during the 
+exploratory analysis phase show right or left skewed distributions.
