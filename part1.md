@@ -1,14 +1,6 @@
----
-title: 'Part 1: A Simulation Exercise'
-author: "Yasser Gonzalez --- http://yassergonzalez.com"
-date: "February 2015"
-output:
-  html_document:
-    keep_md: yes
-  pdf_document: default
----
+# Part 1: A Simulation Exercise
 
-# Introduction
+## Introduction
 
 In the first part of the project we study the exponential distribution under 
 the central limit theorem using R. The probability density function of the 
@@ -25,13 +17,14 @@ investigates the distribution of 1,000 observations of averages of 40 exponentia
 simulations. The rate parameter $\lambda$ will be set to 0.2 for all of the 
 simulations.
 
-# Simulations
+## Simulations
 
 Before running the simulations, we set the random seed to a fixed number to make 
 the results reproducible. Also, the R packages that will be used throughout 
 the report are loaded into the interpreter.
 
-```{r}
+
+```r
 set.seed(12345)
 
 library("ggplot2")
@@ -41,7 +34,8 @@ We must obtain a sample with 1,000 observations of the average of 40 simulations
 of the exponential distribution, which can be generated in R with the following 
 code fragment.
 
-```{r}
+
+```r
 mean_sample <- replicate(1000, mean(rexp(40, rate = 0.2)))
 ```
 
@@ -49,22 +43,28 @@ After running this code, `mean_sample` contains a vector with 1,000 elements.
 This vector constitutes the sample that will be studied in the remainder 
 of the report.
 
-# Sample Mean versus Theoretical Mean
+## Sample Mean versus Theoretical Mean
 
 The expected value of the sample mean of the averages of the simulations of the 
 exponential distribution is the theoretical distribution mean---i.e. $1/\lambda$, 
 in this case $1/0.2 = 5$. Therefore, if we calculate the sample mean of
 `mean_sample` we must obtain a value close to 5.
 
-```{r}
+
+```r
 mean(mean_sample)
+```
+
+```
+## [1] 4.971972
 ```
 
 This fact is also illustrated in the following plot, which shows a histogram of 
 `mean_sample` along with a vertical line for the theoretical mean. 
 It confirms that the sample is centred around the theoretical mean.
 
-```{r sample_vs_theoretical_mean,fig.path="figures/"}
+
+```r
 data <- data.frame(x = mean_sample)
 ggplot(data, aes(x = x)) +
     geom_histogram(binwidth = 0.15) +
@@ -73,7 +73,9 @@ ggplot(data, aes(x = x)) +
     ylab("Count")
 ```
 
-# Sample Variance versus Theoretical Variance
+![](figures/sample_vs_theoretical_mean-1.png) 
+
+## Sample Variance versus Theoretical Variance
 
 The theoretical variance of the distribution of the mean of 40 exponential simulations
 is $\sigma^2/n$, where $\sigma^2$ is the variance of the exponential distribution
@@ -81,8 +83,13 @@ $1/\lambda^2$ and $n$ is the sample size---i.e. in this case
 $\frac{1}{n \lambda^2} = \frac{1}{40 \cdot 0.2^2} = 0.625$. So, if we calculate
 the sample variance of `mean_sample` we must obtain a value close to 0.625.
 
-```{r}
+
+```r
 var(mean_sample)
+```
+
+```
+## [1] 0.5954369
 ```
 
 Additionally, the following code fragment repeats 1,000 times the simulation 
@@ -91,7 +98,8 @@ sample of the distribution of the variance. The plot illustrates that the
 sample variance is centred around the theoretical variance of the 
 distribution 0.625 represented by the vertical line.
 
-```{r sample_vs_theoretical_var,fig.path="figures/"}
+
+```r
 var_sample <- replicate(1000, var(replicate(1000, mean(rexp(40, rate = 0.2)))))
 
 data <- data.frame(x = var_sample)
@@ -102,7 +110,9 @@ ggplot(data, aes(x = x)) +
     ylab("Count")
 ```
 
-# Distribution
+![](figures/sample_vs_theoretical_var-1.png) 
+
+## Distribution
 
 According to the central limit theorem, the distribution of the averages of the 
 exponential simulations becomes normal as the sample size increases. The result 
@@ -113,7 +123,8 @@ The following plot illustrates this fact by showing the histogram of
 `mean_sample` along with the density function of a normal distribution 
 with mean 5 and variance 0.625.
 
-```{r distribution,fig.path="figures/"}
+
+```r
 data <- data.frame(x = mean_sample)
 
 normal_data = data.frame(x = seq(min(mean_sample), max(mean_sample), length = 100))
@@ -125,3 +136,5 @@ ggplot(data, aes(x = x, y = ..density..)) +
     xlab("Mean of 40 exponential simulations") +
     ylab("Density")
 ```
+
+![](figures/distribution-1.png) 
